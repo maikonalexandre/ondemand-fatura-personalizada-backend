@@ -18,12 +18,13 @@ if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 // **Rotas públicas** - Não requerem autenticação
 
 // Usar o schemaOpenAPI.yaml como documentação da API
+app.use("/", require("./routers/statusRouter")); // Rota de status
+
 app.use("/open-api", (req, res) => {
   const schemaOpenAPI = YAML.load(path.join(__dirname, "./schemaOpenAPI.yaml"));
   res.json(schemaOpenAPI);
 });
 
-app.use("/status", require("./routers/statusRouter")); // Rota de status
 app.use("/auth", require("./routers/authRouter")); // Rotas de autenticação (login, etc.)
 
 // Rotas dos webhooks

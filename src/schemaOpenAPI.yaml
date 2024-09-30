@@ -130,7 +130,7 @@ components:
           type: integer
 
 paths:
-  /status:
+  /:
     get:
       summary: Verificar o status do serviço e a conexão com o MongoDB
       operationId: getStatus
@@ -356,7 +356,7 @@ paths:
                 $ref: '#/components/schemas/Configuracao'
         '404':
           description: Configuração não encontrada
-    patch:
+    put:
       summary: Atualizar uma configuração pelo ID
       operationId: atualizarConfiguracao
       security:
