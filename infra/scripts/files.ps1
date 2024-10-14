@@ -1,5 +1,5 @@
 # Define o diretório raiz para iniciar a busca
-$rootDir = "../.."
+$rootDir = "../../src"
 
 # Função para verificar se um caminho está dentro de um diretório node_modules
 function Is-InNodeModules {
@@ -14,9 +14,9 @@ $items = Get-ChildItem -Path $rootDir -Recurse | Where-Object { -not (Is-InNodeM
 
 foreach ($item in $items) {
     if ($item.PSIsContainer) {
-        Write-Host "Pasta encontrada: $($item.FullName)"
+        # Write-Host "Pasta encontrada: $($item.FullName)"
     } else {
-        Write-Host "Conteúdo do arquivo: $($item.FullName)"
+        Write-Host "$($item.FullName)"
         Get-Content -Path $item.FullName
         Write-Host "`n"  # Adiciona uma nova linha para melhor legibilidade
     }

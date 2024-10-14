@@ -5,6 +5,10 @@ const IncludeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  codigo: {
+    type: String,
+    required: true,
+  },
   descricao: String,
   conteudo: {
     type: String,

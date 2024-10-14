@@ -2,7 +2,10 @@
 
 ## Melhorias
 
-### vs 0.0.15
+### vs 0.0.16 (não disponível)
+  - status do serviço na raiz
+
+### vs 0.0.15 (última estável)
   - campos de configuracoes (nome, codigo, valor, baseOmie)
   - configuracoes de sistema:
     - email-from
