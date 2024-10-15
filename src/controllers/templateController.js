@@ -4,26 +4,26 @@ class TemplateController {
   // Criar um novo Template
   static async create(req, res) {
     const { nome, codigo, descricao, templateEjs, status } = req.body;
-  
+
     // Validação básica dos campos obrigatórios
     if (!nome || !codigo || !templateEjs || !status) {
       return res.status(400).json({
-        message: 'Nome, Código, TemplateEJS e Status são obrigatórios.',
+        message: "Nome, Código, TemplateEJS e Status são obrigatórios.",
       });
     }
-  
+
     const template = new Template({ nome, codigo, descricao, templateEjs, status });
-  
+
     try {
       const savedTemplate = await template.save();
       res.status(201).json({
-        message: 'Template criado com sucesso!',
+        message: "Template criado com sucesso!",
         template: savedTemplate,
       });
     } catch (error) {
-      console.error('Erro ao salvar o template:', error);
+      console.error("Erro ao salvar o template:", error);
       res.status(500).json({
-        message: 'Erro ao salvar o template.',
+        message: "Erro ao salvar o template.",
         error: error.message,
       });
     }
@@ -53,29 +53,36 @@ class TemplateController {
   // Atualizar um Template por ID
   static async update(req, res) {
     const { nome, codigo, descricao, templateEjs, status } = req.body;
-  
+
     // Validação básica dos campos obrigatórios
-    if (!nome || !codigo || !templateEjs || !status) {
+    if (!nome && !codigo && !templateEjs && !status) {
       return res.status(400).json({
-        message: 'Nome, Código, TemplateEJS e Status são obrigatórios.',
+        message: "Pelo menos um dos campos Nome, Código, TemplateEJS ou Status deve ser fornecido.",
       });
     }
-  
+
+    const updateFields = {};
+    if (nome) updateFields.nome = nome;
+    if (codigo) updateFields.codigo = codigo;
+    if (descricao) updateFields.descricao = descricao;
+    if (templateEjs) updateFields.templateEjs = templateEjs;
+    if (status) updateFields.status = status;
+
     try {
-      const template = await Template.findByIdAndUpdate(req.params.id, { nome, codigo, descricao, templateEjs, status }, { new: true });
+      const template = await Template.findByIdAndUpdate(req.params.id, updateFields, { new: true });
       if (!template) {
         return res.status(404).json({
-          message: 'Template não encontrado.',
+          message: "Template não encontrado.",
         });
       }
       res.status(200).json({
-        message: 'Template atualizado com sucesso!',
+        message: "Template atualizado com sucesso!",
         template: template,
       });
     } catch (error) {
-      console.error('Erro ao atualizar o template:', error);
+      console.error("Erro ao atualizar o template:", error);
       res.status(500).json({
-        message: 'Erro ao atualizar o template.',
+        message: "Erro ao atualizar o template.",
         error: error.message,
       });
     }

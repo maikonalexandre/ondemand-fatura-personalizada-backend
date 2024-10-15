@@ -28,7 +28,7 @@ const faturaService = {
         Moeda.find(),
       ]);
 
-      const configuracoes = await faturaService.getConfiguracoes(authOmie.appKey);
+      const configuracoes = await faturaService.getConfiguracoes(baseOmie);
 
       const { fatura, emailAssunto, emailCorpo } = await faturaService.getTemplates(
         authOmie.appKey
@@ -67,9 +67,9 @@ const faturaService = {
     }
   },
 
-  getConfiguracoes: async (appKey) => {
+  getConfiguracoes: async (baseOmie) => {
     const configuracoes = await Configuracao.find({
-      $or: [{ appKey: appKey }, { appKey: null }],
+      $or: [{ baseOmie: baseOmie._id }, { baseOmie: null }],
     }).exec();
 
     return configuracoes;
