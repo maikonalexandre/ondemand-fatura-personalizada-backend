@@ -25,7 +25,7 @@ const faturaService = {
       const [baseOmie, includes, moedas] = await Promise.all([
         BaseOmie.findOne({ appKey: authOmie.appKey }),
         Include.find(),
-        Moeda.find(),
+        faturaService.listarMoedasComCotacao(),
       ]);
 
       const configuracoes = await faturaService.getConfiguracoes(baseOmie);
@@ -65,6 +65,25 @@ const faturaService = {
       await osService.trocarEtapaOS(authOmie, nCodOS, etapaErro, `${error}`);
       console.log(`OS ${nCodOS} movida para a etapa de erro`);
     }
+  },
+
+  listarMoedasComCotacao: async () => {
+    const moedas = await Moeda.find();
+    const moedasComCotacao = await Promise.all(
+      moedas.map(async (moeda) => {
+        const cotacao = await moeda.getValor();
+        return {
+          nome: moeda.nome,
+          simbolo: moeda.simbolo,
+          tipoCotacao: moeda.tipoCotacao,
+          valor: moeda.valor,
+          status: moeda.status,
+          cotacao: cotacao.valorCotacao,
+          valorFinal: cotacao.valorFinal,
+        };
+      })
+    );
+    return moedasComCotacao;
   },
 
   getConfiguracoes: async (baseOmie) => {
