@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: Fatura Personalizada API
   description: API para gerar Faturas Personalizadas integrado a OS do Omie
-  version: 0.0.16
+  version: 0.0.19
   contact:
     name: Fabio
     email: fabio@oondemand.com.br
@@ -62,9 +62,9 @@ components:
           type: string
         cnpj:
           type: string
-        omieAppKey:
+        appKey:
           type: string
-        omieAppSecret:
+        appSecret:
           type: string
         status:
           type: string
