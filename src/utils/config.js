@@ -3,15 +3,18 @@ const BaseOmie = require("../models/baseOmie");
 
 async function getConfig(codigo, appKey) {
   try {
-    // Busca a baseOmie correspondente à appKey
-    const baseOmie = await BaseOmie.findOne({ appKey });
+    let baseOmie = null;
+    if (appKey) {
+      baseOmie = await BaseOmie.findOne({ appKey });
 
-    if (!baseOmie) throw new Error(`BaseOmie com appKey ${appKey} não encontrada`);
+      if (!baseOmie) throw new Error(`BaseOmie com appKey ${appKey} não encontrada`);
+    }
 
-    // Busca a configuração no banco de dados diretamente pelo código e baseOmie
-    let configuracao = await Configuracoes.findOne({ codigo, baseOmie: baseOmie._id });
+    let configuracao = await Configuracoes.findOne({
+      codigo,
+      baseOmie: baseOmie ? baseOmie._id : null,
+    });
 
-    // Se não encontrar a configuração específica da baseOmie, busca a configuração geral
     if (!configuracao) configuracao = await Configuracoes.findOne({ codigo, baseOmie: null });
 
     if (!configuracao) return null;

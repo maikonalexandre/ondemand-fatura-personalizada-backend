@@ -5,6 +5,13 @@ const sendEmail = async (emailFrom, emailTo, subject, body, attachments) => {
   const sendgridAppKey = process.env.SENDGRID_API_KEY;
   client.setApiKey(sendgridAppKey);
 
+  //verificar e remover emails duplicados
+  emailTo = emailTo
+      .split(",")
+      .map((email) => email.trim())
+      .filter((email, index, self) => email && self.indexOf(email) === index)
+      .join(",");
+
   const message = {
     personalizations: [
       {
