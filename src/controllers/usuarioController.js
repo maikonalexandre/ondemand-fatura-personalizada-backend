@@ -123,7 +123,7 @@ exports.excluirUsuario = async (req, res) => {
 exports.validarToken = async (req, res) => {
   try {
     // Se o middleware `protect` passou, `req.user` já está preenchido
-    res.json(req.user);
+    res.json(req.usuario);
   } catch (error) {
     res.status(401).json({ error: "Token inválido ou expirado" });
   }

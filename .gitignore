@@ -7,3 +7,4 @@ logs
 deployment.yaml
 
 package-lock.json
+yarn.lock
